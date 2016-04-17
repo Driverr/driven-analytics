@@ -1,8 +1,12 @@
-//this is the controller for all database fetches, JSON operations on them and sending requested data to views
+//this is the controller for new file callback from Lambda
+
+
+var logCopyParse = require('../services/logCopyParse');
 
 
 var mysql     =    require('mysql');
 var moment    =    require('moment');
+
 
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
@@ -15,15 +19,16 @@ var pool      =    mysql.createPool({
     debug    :  false
 });
 
-//function dataController() {}; //creating the dataController class which will have the functions inside of it
 
-exports.getAccelerationY = function(req,res) {
+exports.newFileTrigger = function(req,res) {
 
     var error = [];
     var status = [];
 
-    var driverId = req.body.driverId;
-    var tripId = req.body.tripId;
+    var newfilename = req.body.newfilename;
+    var bucket = req.body.bucket;
+
+    
 
     pool.getConnection(function(err,connection){
         if (err) {
@@ -73,21 +78,3 @@ exports.getAccelerationY = function(req,res) {
         });//connection.beginTransaction ends
     });//pool.getConnection ends
 };//exported getAccelerationY function ends
-
-
-function fixTimeStamp (rows) {
-    var time = (new Date).getTime();
-
-    for (i = 0; i < rows.length; i++) {
-        
-        rows[i].timestamp = time; //changing the timestamp value to current epoch based
-        time = time + 1000; //increasing by 1000 milisecond for every reading
-    }
-
-    console.log("the fixTimeStamp function changes the rows to: " + rows);
-
-    return (rows);
-}
-
-
-// for explicit based exporting - module.exports
