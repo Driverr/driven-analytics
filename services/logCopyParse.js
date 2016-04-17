@@ -1,0 +1,1 @@
+//service to use aws sdk to copy new file (filename) from S3 bucket (bucketname) to EC2, parse it and load it onto MySQL 

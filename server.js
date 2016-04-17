@@ -14,6 +14,7 @@ var port = process.env.PORT || 9000;
 var driverController = require('./controllers/driverController');
 var tripController = require('./controllers/tripController');
 var dataController = require('./controllers/dataController');
+var newFileController = require('./controllers/newFileController');
 
 //connect to the mysql db 
 //var db = something something
@@ -44,6 +45,9 @@ router.route('/getTrips')
 
 router.route('/getAy')
 	.post(dataController.getAccelerationY);
+
+router.route('/newFile')
+	.post(newFileController.newFileTrigger);
 
 
 //app should use router with /api prefix
