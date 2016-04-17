@@ -38,7 +38,7 @@ exports.getAccelerationY = function(req,res) {
 
             //var query = ModelFunctionName.getAyQuery(driverId, tripId);
 
-            var query = "select timestamp, ay_max as high, ay_min as low, ay_avg as open, ay_avg as close from trip_details where driver_id = 0 group by timestamp";
+            var query = "select timestamp, ay_max as high, ay_min as low, ay_avg as open, ay_avg as close from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
 
             connection.query(query,[],function(err,rows){
                 if(err) {
