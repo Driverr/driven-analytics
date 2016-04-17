@@ -78,7 +78,7 @@ exports.getAccelerationY = function(req,res) {
 function fixTimeStamp (rows) {
     var time = (new Date).getTime();
 
-    for (i = 0; i < rows.length(); i++) {
+    for (i = 0; i < rows.length; i++) {
         
         rows[i].timestamp = time; //changing the timestamp value to current epoch based
         time = time + 1000; //increasing by 1000 milisecond for every reading
