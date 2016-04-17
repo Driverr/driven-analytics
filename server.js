@@ -36,7 +36,7 @@ var router = express.Router();
 
 
 router.route('/getDrivers')
-	.get(driverController.getAllDrivers);
+	.post(driverController.getAllDrivers);
 
 
 router.route('/getTrips')

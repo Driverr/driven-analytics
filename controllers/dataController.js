@@ -29,7 +29,8 @@ exports.getAccelerationY = function(req,res) {
         if (err) {
             connection.release();
             console.log("The error in getAy connecting to the db is: " + err);
-            res.json({error: "Oops! There was an error in connecting to the db."});
+            //res.json({error: "Oops! There was an error in connecting to the db."});
+            res.json({error: JSON.stringify(err)});
             return;
         }
         connection.beginTransaction(function(err){
@@ -37,7 +38,7 @@ exports.getAccelerationY = function(req,res) {
 
             //var query = ModelFunctionName.getAyQuery(driverId, tripId);
 
-            var query = "select timestamp, max(ay), min(ay), avg(ay) from trip_details group by timestamp where driver_id = 0";
+            var query = "select timestamp, ay_max, ay_min, ay_avg from trip_details where driver_id = 0 group by timestamp";
 
             connection.query(query,[],function(err,rows){
                 if(err) {
