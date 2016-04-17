@@ -1,0 +1,1 @@
+//model file for the various mysql connection variables, queries, data manipulation etc
