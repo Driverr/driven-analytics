@@ -38,7 +38,7 @@ exports.getAccelerationY = function(req,res) {
 
             //var query = ModelFunctionName.getAyQuery(driverId, tripId);
 
-            var query = "select timestamp, ay_max, ay_min, ay_avg from trip_details where driver_id = 0 group by timestamp";
+            var query = "select timestamp, ay_max as high, ay_min as low, ay_avg as open, ay_avg as close from trip_details where driver_id = 0 group by timestamp";
 
             connection.query(query,[],function(err,rows){
                 if(err) {
@@ -52,9 +52,12 @@ exports.getAccelerationY = function(req,res) {
                 else{
 
                     console.log("Data retrieved successfull and the data is: " + JSON.stringify(rows));
+
+                    var newRows = fixTimeStamp(rows);
+
                     res.json({
                         success: 'Data for Ay sent successfully',
-                        data: rows
+                        data: newRows
                     });
                 }
             });
@@ -70,6 +73,21 @@ exports.getAccelerationY = function(req,res) {
         });//connection.beginTransaction ends
     });//pool.getConnection ends
 };//getAccelerationY function ends
+
+
+function fixTimeStamp (rows) {
+    var time = (new Date).getTime();
+
+    for (i = 0; i < rows.length(); i++) {
+        
+        rows[i].timestamp = time; //changing the timestamp value to current epoch based
+        time = time + 1000; //increasing by 1000 milisecond for every reading
+    }
+
+    console.log("the fixTimeStamp function changes the rows to: " + rows);
+
+    return (rows);
+}
 
 
 // for explicit based exporting - module.exports
