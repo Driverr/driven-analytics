@@ -80,8 +80,10 @@ function fixTimeStamp (rows) {
 
     for (i = 0; i < rows.length; i++) {
         
-        rows[i].timestamp = time; //changing the timestamp value to current epoch based
+        rows[i].date = time; //changing the timestamp value to current epoch based
         time = time + 1000; //increasing by 1000 milisecond for every reading
+
+        rows[i].close += 0.1; //to bring about a change in open and close
     }
 
     console.log("the fixTimeStamp function changes the rows to: " + rows);
