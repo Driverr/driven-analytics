@@ -38,7 +38,7 @@ exports.getAccelerationY = function(req,res) {
 
             //var query = ModelFunctionName.getAyQuery(driverId, tripId);
 
-            var query = "select timestamp as DateYo, ay_max as high, ay_min as low, ay_avg as open, ay_avg as close from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
+            var query = "select timestamp as datetime, ay_max as high, ay_min as low, ay_avg as open, ay_avg as close from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
 
             connection.query(query,[],function(err,rows){
                 if(err) {
@@ -80,7 +80,7 @@ function fixTimeStamp (rows) {
 
     for (i = 0; i < rows.length; i++) {
         
-        rows[i].date = time; //changing the timestamp value to current epoch based
+        rows[i].datetime = time; //changing the timestamp value to current epoch based
         time = time + 1000; //increasing by 1000 milisecond for every reading
 
         rows[i].close += 0.1; //to bring about a change in open and close
