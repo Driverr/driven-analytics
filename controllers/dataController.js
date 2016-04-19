@@ -6,7 +6,7 @@ var moment    =    require('moment');
 
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
-    host     : 'http://drivendb.c777xq6yyhhm.ap-southeast-1.rds.amazonaws.com/',
+    host     : 'drivendb.c777xq6yyhhm.ap-southeast-1.rds.amazonaws.com',
     user     : 'drivenuser',
     password : 'drivenbits',
     database : 'driven_analytics',
