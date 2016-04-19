@@ -86,7 +86,7 @@ function fixTimeStamp (rows) {
         rows[i].close += 0.1; //to bring about a change in open and close
     }
 
-    console.log("the fixTimeStamp function changes the rows to: " + rows);
+    console.log("the fixTimeStamp function changes the rows to: " + JSON.stringify(rows));
 
     return (rows);
 }
