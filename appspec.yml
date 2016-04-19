@@ -2,4 +2,8 @@ version: 0.0
 os: linux
 files:
    - source: /
-     destination: /test-mark1/driven-analytics/
+     destination: /new-deploy
+hooks:
+   AfterInstall:
+    - location: scripts/startserver.sh
+      runas: root
