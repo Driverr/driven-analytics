@@ -44,7 +44,7 @@ exports.getAccelerationY = function(req,res) {
                 if(err) {
                     connection.rollback(function(){
                         connection.release();
-                        console.log("The error in getAy retrieving from db is: " + err);
+                        console.log("The error in getAy retrieving from DB is: " + err);
                         res.json({error: "Oops! There was an error in retrieving the data from db."});
                         return;
                     });
