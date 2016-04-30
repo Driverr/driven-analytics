@@ -82,8 +82,9 @@ function fixTimeStamp (rows) {
         
         rows[i].datetime = time; //changing the timestamp value to current epoch based
         time = time + 1000; //increasing by 1000 milisecond for every reading
-
-        rows[i].close += 0.1; //to bring about a change in open and close
+        rows[i].high = rows[i].open;
+        rows[i].close += 0.001; //to bring about a change in open and close
+        rows[i].low = rows[i].close;
     }
 
     console.log("the fixTimeStamp function changes the rows to: " + JSON.stringify(rows));
