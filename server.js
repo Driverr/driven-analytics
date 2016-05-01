@@ -46,6 +46,9 @@ router.route('/getTrips')
 router.route('/getAy')
 	.post(dataController.getAccelerationY);
 
+router.route('/getScores')
+	.post(dataController.getDriverScores);
+
 router.route('/newFile')
 	.post(newFileController.newFileTrigger);
 
