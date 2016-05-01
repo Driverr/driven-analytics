@@ -38,7 +38,8 @@ exports.getAccelerationY = function(req,res) {
 
             //var query = ModelFunctionName.getAyQuery(driverId, tripId);
 
-            var query = "select timestamp as datetime, ay_max as high, ay_min as low, ay_avg as open, ay_avg as close from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
+            //var query = "select timestamp as datetime, ay_max as high, ay_min as low, ay_avg as open, ay_avg as close from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
+            var query = "select timestamp as x, ay_avg as y from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
 
             connection.query(query,[],function(err,rows){
                 if(err) {
@@ -80,11 +81,11 @@ function fixTimeStamp (rows) {
 
     for (i = 0; i < rows.length; i++) {
         
-        rows[i].datetime = time; //changing the timestamp value to current epoch based
+        rows[i].x = time; //changing the timestamp value to current epoch based
         time = time + 1000; //increasing by 1000 milisecond for every reading
-        rows[i].high = rows[i].open;
+        /*rows[i].high = rows[i].open;
         rows[i].close += 0.001; //to bring about a change in open and close
-        rows[i].low = rows[i].close;
+        rows[i].low = rows[i].close;*/
     }
 
     console.log("the fixTimeStamp function changes the rows to: " + JSON.stringify(rows));
