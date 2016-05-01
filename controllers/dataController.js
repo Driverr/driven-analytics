@@ -157,8 +157,7 @@ uncomment whole block while retrieving from actual db instead of dummy data */
 
 
 //dummy data for now about the scores
-var newRows = "
-[
+var newRows = "[
     {
       "x": 1462125381603,
       "y": 67
@@ -199,8 +198,7 @@ var newRows = "
       "x": 1462134390603,
       "y": 84
     }
-]
-";
+]";
 
 var avg_Score = (67+70+72+73+69+75+79+82+85+84)/10;
 
