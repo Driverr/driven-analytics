@@ -39,7 +39,7 @@ exports.getAccelerationY = function(req,res) {
             //var query = ModelFunctionName.getAyQuery(driverId, tripId);
 
             //var query = "select timestamp as datetime, ay_max as high, ay_min as low, ay_avg as open, ay_avg as close from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
-            var query = "select timestamp as x, ay_avg as y from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
+            var query = "select timestamp as x, ay_avg as y from trip_details where driver_id = 0 and trip_id = 1 and ay_avg between -0.42 and .74 group by timestamp";
 
             connection.query(query,[],function(err,rows){
                 if(err) {
@@ -237,6 +237,96 @@ var avg_Score = (67+69+70+70+69+70+71+72+73+74+74+75+75+76+77+77)/16;
 
 
 }//getDriverScores ends here   
+
+
+exports.getEvents = function(req, res){
+
+    var error = [];
+    var status = [];
+
+    var driverId = req.body.driverId;
+    var tripId = req.body.tripId;
+
+    /* uncomment whole block while retrieving from actual db instead of dummy data 
+    pool.getConnection(function(err,connection){
+        if (err) {
+            connection.release();
+            console.log("The error in getScores connecting to the db is: " + err);
+            //res.json({error: "Oops! There was an error in connecting to the db."});
+            res.json({error: JSON.stringify(err)});
+            return;
+        }
+
+
+        connection.beginTransaction(function(err){
+            console.log('connected as id ' + connection.threadId);
+
+            //use some kind of query like below to get the driver scores from the db
+            var query = "select timestamp as x, overall_score as y from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
+
+            connection.query(query,[],function(err,rows){
+                if(err) {
+                    connection.rollback(function(){
+                        connection.release();
+                        console.log("The error in getScores retrieving from DB is: " + err);
+                        res.json({error: "Oops! There was an error in retrieving the data from db."});
+                        return;
+                    });
+                }
+                else{
+
+                    console.log("Data retrieved successfully in getScores and the data is: " + JSON.stringify(rows));
+
+                    var newRows = fixTimeStamp(rows);
+
+                    res.json({
+                        success: 'Data for Ay sent successfully',
+                        data: newRows
+                    });
+                }
+            });
+
+            connection.on('error', function(){
+                connection.rollback(function(){
+                    connection.release();
+                    console.log("The error in general connection is: " + err);
+                    res.json({error: "Oops! There was an error while connecting to the db."});
+                    return;
+                });
+            });//connection.on error ends
+        });//connection.beginTransaction ends
+    });//pool.getConnection ends 
+
+uncomment whole block while retrieving from actual db instead of dummy data */
+
+
+//dummy data for now about the scores
+var newRows = [
+    {
+      "label": "Hard Breaking",
+      "value": 11
+    },
+    {
+      "label": "Hard Turns",
+      "value": 4
+    },
+    {
+      "label": "Rash Acceleration",
+      "value": 15
+    }
+];
+
+    res.json({
+                success: 'Data for getScores sent successfully',
+                data: newRows
+            });
+
+
+
+
+
+}//getDriverScores ends here   
+
 
 
 

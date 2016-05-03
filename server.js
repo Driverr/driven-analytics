@@ -49,6 +49,10 @@ router.route('/getAy')
 router.route('/getScores')
 	.post(dataController.getDriverScores);
 
+router.route('/getEvents')
+	.post(dataController.getEvents);
+	
+
 router.route('/newFile')
 	.post(newFileController.newFileTrigger);
 
