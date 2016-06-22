@@ -300,6 +300,8 @@ exports.getEvents = function(req, res){
 uncomment whole block while retrieving from actual db instead of dummy data */
 
 
+
+
 //dummy data for now about the scores
 var newRows = [
     {
@@ -328,6 +330,121 @@ var newRows = [
 }//getDriverScores ends here   
 
 
+exports.getHardAccs = function(req,res) {
+
+    var error = [];
+    var status = [];
+
+    var driverId = req.body.driverId;
+    var tripId = req.body.tripId;
+
+    pool.getConnection(function(err,connection){
+        if (err) {
+            connection.release();
+            console.log("The error in getHA connecting to the db is: " + err);
+            //res.json({error: "Oops! There was an error in connecting to the db."});
+            res.json({error: JSON.stringify(err)});
+            return;
+        }
+        connection.beginTransaction(function(err){
+            console.log('connected as id ' + connection.threadId);
+
+            //var query = ModelFunctionName.getAyQuery(driverId, tripId);
+
+            //var query = "select timestamp as datetime, ay_max as high, ay_min as low, ay_avg as open, ay_avg as close from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
+            var query = "select timestamp as x, ay as y from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
+
+            connection.query(query,[],function(err,rows){
+                if(err) {
+                    connection.rollback(function(){
+                        connection.release();
+                        console.log("The error in getHA retrieving from DB is: " + err);
+                        res.json({error: "Oops! There was an error in retrieving the data from db."});
+                        return;
+                    });
+                }
+                else{
+
+                    console.log("Data retrieved successfull and the data is: " + JSON.stringify(rows));
+
+                    var HA_data = calc_HA(rows);
+
+                    res.json({
+                        success: 'Data for HA sent successfully',
+                        data: HA_data
+                    });
+                }
+            });
+
+            connection.on('error', function(){
+                connection.rollback(function(){
+                    connection.release();
+                    console.log("The error in general connection is: " + err);
+                    res.json({error: "Oops! There was an error while connecting to the db."});
+                    return;
+                });
+            });//connection.on error ends
+        });//connection.beginTransaction ends
+    });//pool.getConnection ends
+};//exported getAccelerationY function ends
+
+
+function calc_HA (rows) {
+
+   // code for calculating max and min for every 3 seconds 
+   //more efficient - extract this in a separate function that will return a JSON object of these 4 arrays?
+
+
+    max_values = []; //length will be rows.length - 3
+    max_times = []; //length will be rows.length - 3 
+    min_values = []; //length will be rows.length - 3
+    min_times = []; //length will be rows.length - 3
+
+    max_diff = 0;
+    diff=0;
+
+    for(i=0; i<(rows.length-2); i++) {
+       //say rows.y has LaY and rows.x has time
+       max_values[i] = rows.y[i];
+       max_times[i] = rows.x[i];
+       min_values[i] = rows.y[i];
+       min_times[i] = rows.x[i];
+
+       for(j=i; j<i+3; j++) {
+            if(rows.y[j]>max_values[i]) {
+                max_values[i] = rows.y[j];
+                max_times[i] = rows.x[j];
+            }
+            if(rows.y[j]<min_values[i]) {
+                min_values[i] = rows.y[j];
+                min_times[i] = rows.x[j];
+            }
+            
+            max_diff = ((max_values[i]-min_values[i])>max_diff) ? (max_values[i]-min_values[i]) : max_diff;
+
+       } //for j loop ends
+    }//for i loop ends
+
+ha_events = [];
+
+for(i=0; i<(rows.length-2);i++) {
+
+    diff = max_values[i] - min_values[i];
+    if( diff>(0.66*max_diff) )
+        ha_events[i] = i
+}
+
+
+
+
+
+
+    //write separate logic to compose JSON of data
+
+    console.log("the calc_HA function is sending this data back: " + JSON.stringify(data));
+
+    return (data);
+}
 
 
 // for explicit based exporting - module.exports
