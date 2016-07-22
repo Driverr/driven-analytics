@@ -39,7 +39,12 @@ var router = express.Router();
 router.route('/getDrivers')
 	.post(driverController.getAllDrivers);
 
+router.route('/driver-signup')
+	.post(driverController.postDrivers);	
 
+router.route('/driver-login')
+	.post(driverController.authenticateDrivers);
+	
 router.route('/getTrips')
 	.post(tripController.getTripsByDriverId);
 
