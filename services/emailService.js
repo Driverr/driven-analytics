@@ -37,18 +37,20 @@ exports.postContactMessage = function (req, res) {
 	});
 
 	sendgrid.send(email, function(err,json) {
-		if(err)
+		if(err) {
+			res.json({ message: 'Error while sending email'});
 			return (err);
+		}
 		
 		else {
 		resp = resp + "\n " + JSON.stringify(json);
 		console.log("Message got from sendgrid for email: " + resp);
 		}
 	});
-}//for loop ends
+	}//for loop ends
 
-return (resp);
-
+	res.json({ success: 'Email sent successfully'});
+	return (resp);
 };
 		
 /***********************************************
