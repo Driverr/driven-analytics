@@ -50,8 +50,6 @@ exports.postcontactmessage = function (req, res) {
 return (resp);
 
 };
-
-
 		
 /***********************************************
 New user signup email function to send email
