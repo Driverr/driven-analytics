@@ -34,22 +34,22 @@ exports.postContactMessage = function (req, res) {
 			from: 'contact@vahanalytics.com',
 			subject: 'New Web Message',
 			html: ( "<head><title>New Message!</title></head><body><h2>New message with the following details received:</h2> <h3><p>Name: </h3>" + req.body.username +  "</p>  <h3><p>Email ID: </h3> " + req.body.useremail + ",</p>  <h3><p> Subject: </h3> " + req.body.subject + ",</p>  <h3><p> Message: </h3> " + req.body.message + " </p> </body>" ),
-	});
+		});
 
 	sendgrid.send(email, function(err,json) {
 		if(err) {
 			res.json({ message: 'Error while sending email'});
 			return (err);
 		}
-		
 		else {
 		resp = resp + "\n " + JSON.stringify(json);
 		console.log("Message got from sendgrid for email: " + resp);
+		res.json({ success: 'Email sent successfully'});
 		}
 	});
 	}//for loop ends
 
-	res.json({ success: 'Email sent successfully'});
+	//res.json({ success: 'Email sent successfully'});
 	return (resp);
 };
 		
