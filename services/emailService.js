@@ -9,10 +9,10 @@ var sendgrid = require('sendgrid')(process.env.SENDGRID_USERNAME, process.env.SE
 /***********************************************
 Email for Contact Us message 
 ***********************************************/
-//Called on contact us submission at /api/contactus via POST
+//Called on contact us submission at /api/contactUs via POST
 
 
-exports.postcontactmessage = function (req, res) {
+exports.postContactMessage = function (req, res) {
 
 	console.log("Web message API hit with the following details: " + req.body.username + ", " + req.body.useremail + ", " + req.body.subject + ", " + req.body.message);
 

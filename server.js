@@ -15,6 +15,7 @@ var driverController = require('./controllers/driverController');
 var tripController = require('./controllers/tripController');
 var dataController = require('./controllers/dataController');
 var newFileController = require('./controllers/newFileController');
+var emailController = require('./services/emailService');
 
 //connect to the mysql db 
 //var db = something something
@@ -44,7 +45,7 @@ router.route('/driver-signup')
 
 router.route('/driver-login')
 	.post(driverController.authenticateDrivers);
-	
+
 router.route('/getTrips')
 	.post(tripController.getTripsByDriverId);
 
@@ -60,6 +61,10 @@ router.route('/getEvents')
 
 router.route('/newFile')
 	.post(newFileController.newFileTrigger);
+
+
+router.route('/contactUs')
+	.post(emailController.postContactMessage);	
 
 
 //app should use router with /api prefix
