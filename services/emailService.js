@@ -49,7 +49,7 @@ exports.postContactMessage = function (req, res) {
 	});
 	}//for loop ends
 
-	res.json({ success: 'Email sent successfully'});
+	// res.json({ success: 'Email sent successfully'});
 	return;
 }
 		

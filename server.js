@@ -37,17 +37,17 @@ var router = express.Router();
 //	.post(userController.loginUser);
 
 
-router.route('/getDrivers')
-	.post(driverController.getAllDrivers);
+// router.route('/getDrivers')
+// 	.post(driverController.getAllDrivers);
 
-router.route('/driver-signup')
-	.post(driverController.postDrivers);	
+// router.route('/driver-signup')
+// 	.post(driverController.postDrivers);	
 
-router.route('/driver-login')
-	.post(driverController.authenticateDrivers);
+// router.route('/driver-login')
+// 	.post(driverController.authenticateDrivers);
 
-router.route('/getTrips')
-	.post(tripController.getTripsByDriverId);
+// router.route('/getTrips')
+// 	.post(tripController.getTripsByDriverId);
 
 router.route('/getAy')
 	.post(dataController.getAccelerationY);
@@ -59,8 +59,8 @@ router.route('/getEvents')
 	.post(dataController.getEvents);
 	
 
-router.route('/newFile')
-	.post(newFileController.newFileTrigger);
+// router.route('/newFile')
+// 	.post(newFileController.newFileTrigger);
 
 
 router.route('/contactUs')
