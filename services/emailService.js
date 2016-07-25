@@ -3,7 +3,7 @@
 
 //global variables to be used in each emailing function
 var founders_IDs = ['shivalik@vahanalytics.com', 'arun@vahanalytics.com', 'someshwar@vahanalytics.com', 'nikhil@vahanalytics.com'];
-var contact_ID = ['contact@vahanalytics.com'];
+var contact_ID = ['contact@vahanalytics.com', 'arun@vahanalytics.com', 'someshwar@vahanalytics.com', 'nikhil@vahanalytics.com'];
 var sendgrid = require('sendgrid')('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');
 		
 /***********************************************
@@ -31,7 +31,7 @@ exports.postContactMessage = function (req, res) {
 	{
 		var email = new sendgrid.Email({
 			to: contact_ID[i],
-			from: 'shvlksen@gmail.com',
+			from: 'contact@vahanalytics.com',
 			subject: 'New Web Message',
 			html: ( "<head><title>New Message!</title></head><body><h2>New message with the following details received:</h2> <h3><p>Name: </h3>" + req.body.username +  "</p>  <h3><p>Email ID: </h3> " + req.body.useremail + ",</p>  <h3><p> Subject: </h3> " + req.body.subject + ",</p>  <h3><p> Message: </h3> " + req.body.message + " </p> </body>" ),
 		});
