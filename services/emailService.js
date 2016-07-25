@@ -4,8 +4,7 @@
 //global variables to be used in each emailing function
 var founders_IDs = ['shivalik@vahanalytics.com', 'arun@vahanalytics.com', 'someshwar@vahanalytics.com', 'nikhil@vahanalytics.com'];
 var contact_ID = ['contact@vahanalytics.com'];
-var sendgrid = require('sendgrid')('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
-');
+var sendgrid = require('sendgrid')('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');
 		
 /***********************************************
 Email for Contact Us message 
