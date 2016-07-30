@@ -15,6 +15,9 @@ var pool      =    mysql.createPool({
     debug    :  false
 });
 
+var lat = 19.110834, lon = 72.886355;
+
+
 //function dataController() {}; //creating the dataController class which will have the functions inside of it
 
 exports.getAccelerationY = function(req,res) {
@@ -319,7 +322,7 @@ var newRows = [
 ];
 
     res.json({
-                success: 'Data for getScores sent successfully',
+                success: 'Data for getEvents sent successfully',
                 data: newRows
             });
 
@@ -448,10 +451,6 @@ for(i=0; i<(rows.length-2);i++) {
 
 
 
-
-
-var lat = 19.110834, lon = 72.886355;
-
 exports.getLocation = function(req, res){
 
     var error = [];
@@ -459,6 +458,8 @@ exports.getLocation = function(req, res){
 
     var driverId = req.body.driverId;
     var tripId = req.body.tripId;
+
+    console.log("Get location API hit");
 
     if(driverId!=0 || tripId!=1) {
         console.log("Wrong driver or trip ID!");

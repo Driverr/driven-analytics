@@ -60,7 +60,7 @@ router.route('/getEvents')
 
 
 router.route('/getLocation')
-	.post(dataController.getEvents);
+	.post(dataController.getLocation);
 
 
 // router.route('/newFile')
@@ -68,7 +68,7 @@ router.route('/getLocation')
 
 
 router.route('/contactUs')
-	.post(dataController.getLocation);	
+	.post(emailController.postContactMessage);	
 
 
 //app should use router with /api prefix
