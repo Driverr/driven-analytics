@@ -57,14 +57,18 @@ router.route('/getScores')
 
 router.route('/getEvents')
 	.post(dataController.getEvents);
-	
+
+
+router.route('/getLocation')
+	.post(dataController.getEvents);
+
 
 // router.route('/newFile')
 // 	.post(newFileController.newFileTrigger);
 
 
 router.route('/contactUs')
-	.post(emailController.postContactMessage);	
+	.post(dataController.getLocation);	
 
 
 //app should use router with /api prefix

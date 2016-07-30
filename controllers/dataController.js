@@ -327,7 +327,7 @@ var newRows = [
 
 
 
-}//getDriverScores ends here   
+}//getEvents ends here   
 
 
 exports.getHardAccs = function(req,res) {
@@ -445,6 +445,100 @@ for(i=0; i<(rows.length-2);i++) {
 
     return (data);
 }
+
+
+
+
+
+var lat = 19.110834, lon = 72.886355;
+
+exports.getLocation = function(req, res){
+
+    var error = [];
+    var status = [];
+
+    var driverId = req.body.driverId;
+    var tripId = req.body.tripId;
+
+    if(driverId!=0 || tripId!=1) {
+        console.log("Wrong driver or trip ID!");
+        res.json({error:'incorrect ids'});
+        return;
+    }
+
+    /* uncomment whole block while retrieving from actual db instead of dummy data 
+    pool.getConnection(function(err,connection){
+        if (err) {
+            connection.release();
+            console.log("The error in getScores connecting to the db is: " + err);
+            //res.json({error: "Oops! There was an error in connecting to the db."});
+            res.json({error: JSON.stringify(err)});
+            return;
+        }
+
+
+        connection.beginTransaction(function(err){
+            console.log('connected as id ' + connection.threadId);
+
+            //use some kind of query like below to get the driver scores from the db
+            var query = "select timestamp as x, overall_score as y from trip_details where driver_id = 0 and trip_id = 1 group by timestamp";
+
+            connection.query(query,[],function(err,rows){
+                if(err) {
+                    connection.rollback(function(){
+                        connection.release();
+                        console.log("The error in getScores retrieving from DB is: " + err);
+                        res.json({error: "Oops! There was an error in retrieving the data from db."});
+                        return;
+                    });
+                }
+                else{
+
+                    console.log("Data retrieved successfully in getScores and the data is: " + JSON.stringify(rows));
+
+                    var newRows = fixTimeStamp(rows);
+
+                    res.json({
+                        success: 'Data for Ay sent successfully',
+                        data: newRows
+                    });
+                }
+            });
+
+            connection.on('error', function(){
+                connection.rollback(function(){
+                    connection.release();
+                    console.log("The error in general connection is: " + err);
+                    res.json({error: "Oops! There was an error while connecting to the db."});
+                    return;
+                });
+            });//connection.on error ends
+        });//connection.beginTransaction ends
+    });//pool.getConnection ends 
+
+uncomment whole block while retrieving from actual db instead of dummy data */
+
+    lat = lat + 0.000010;
+    lon = lon + 0.000020;
+
+    if(lat>19.999999 || lon>72.999999) {
+        lat = 19.110834; 
+        lon = 72.886355;
+    }
+    
+    var newLocation = { "location": 
+                        [{"latitude": lat, "longitude": lon}]
+                        };
+
+    res.json({
+                success: 'Data for getLocation sent successfully',
+                data: newLocation
+            });
+    return;
+
+
+
+}//getLocation ends here   
 
 
 // for explicit based exporting - module.exports
